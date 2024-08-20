@@ -4,9 +4,14 @@ import time
 # Function to simulate conversation with timing for video capture
 def simulate_conversation(conversation_steps, delay=2):
     for step in conversation_steps:
-        st.markdown(f"**{step['speaker']}:** {step['message']}")
+        if step['speaker'] == "Guest":
+            st.markdown(f'<div style="text-align: left; margin: 10px; padding: 10px; border-radius: 10px; background-color: #e0e0e0;">'
+                        f'<strong>{step["speaker"]}</strong>: {step["message"]}</div>', unsafe_allow_html=True)
+        else:
+            st.markdown(f'<div style="text-align: right; margin: 10px; padding: 10px; border-radius: 10px; background-color: #6c63ff; color: white;">'
+                        f'<strong>{step["speaker"]}</strong>: {step["message"]}</div>', unsafe_allow_html=True)
         time.sleep(delay)  # Delay between messages to allow for video capture
-st.title("Chat Concierge - Hotel Assistant")
+
 # Initialize session state to control the presentation loop
 if 'scenario_index' not in st.session_state:
     st.session_state.scenario_index = 0
@@ -60,7 +65,8 @@ def play_scenarios():
         # Re-run the function to automatically move to the next scenario
         play_scenarios()
     else:
-        st.write(" ")
+        st.write('<div style="text-align: center; font-size: 1.5em; color: green;">Presentation complete.</div>', unsafe_allow_html=True)
 
 # Start playing scenarios
+st.title("Chat Concierge - Hotel Assistant")
 play_scenarios()
