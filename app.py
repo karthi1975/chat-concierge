@@ -64,8 +64,6 @@ def play_scenarios():
         
         # Re-run the function to automatically move to the next scenario
         play_scenarios()
-    else:
-        st.write('<div style="text-align: center; font-size: 1.5em; color: green;">Presentation complete.</div>', unsafe_allow_html=True)
 
 # Start playing scenarios
 st.title("Chat Concierge - Hotel Assistant")
