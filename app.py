@@ -60,7 +60,7 @@ def play_scenarios():
         # Re-run the function to automatically move to the next scenario
         play_scenarios()
     else:
-        st.write("Presentation complete.")
+        st.write(" ")
 
 # Start playing scenarios
 play_scenarios()
