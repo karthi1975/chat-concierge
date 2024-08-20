@@ -1,4 +1,5 @@
 import streamlit as st
+import time
 from gtts import gTTS
 import base64
 from io import BytesIO
@@ -13,8 +14,12 @@ def text_to_speech(text, speaker):
         audio.seek(0)
         audio_base64 = base64.b64encode(audio.read()).decode()
     
-    # Return the audio player HTML code with autoplay
-    return f'<audio controls autoplay><source src="data:audio/mp3;base64,{audio_base64}" type="audio/mp3"></audio>'
+    # Return the audio player HTML code with autoplay and hidden controls
+    return f'''
+        <audio autoplay style="display:none;">
+            <source src="data:audio/mp3;base64,{audio_base64}" type="audio/mp3">
+        </audio>
+    '''
 
 # Sample conversation
 conversation = [
@@ -28,3 +33,4 @@ conversation = [
 for step in conversation:
     st.markdown(f"**{step['speaker']}:** {step['message']}")
     st.markdown(text_to_speech(step["message"], step["speaker"]), unsafe_allow_html=True)
+    time.sleep(2 + len(step["message"]) * 0.05)  # Adjust delay based on text length
