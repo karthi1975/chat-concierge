@@ -1,5 +1,6 @@
 import streamlit as st
 import time
+import json
 from google.cloud import texttospeech
 import base64
 from io import BytesIO
@@ -7,10 +8,18 @@ import tempfile
 import os
 
 # Path to your Google Cloud service account key JSON file
-json_key_path = "modular-cell-419718-da76e8d77c56.json"
+# json_key_path = "modular-cell-419718-da76e8d77c56.json"
+
+# Decode the environment variable to get the JSON credentials
+json_key_base64 = os.getenv('GOOGLE_CLOUD_CREDENTIALS')
+json_key_content = base64.b64decode(json_key_base64).decode('utf-8')
+
+# Use the credentials to create a temporary JSON file
+with BytesIO(json_key_content.encode()) as json_key_file:
+    client = texttospeech.TextToSpeechClient.from_service_account_info(json.load(json_key_file))
 
 # Initialize the Text-to-Speech client using the local JSON key file
-client = texttospeech.TextToSpeechClient.from_service_account_file(json_key_path)
+# client = texttospeech.TextToSpeechClient.from_service_account_file(json_key_path)
 
 # Function to generate and play voice from text using Google TTS
 def text_to_speech(text, speaker):
