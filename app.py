@@ -7,9 +7,6 @@ from io import BytesIO
 import tempfile
 import os
 
-# Path to your Google Cloud service account key JSON file
-# json_key_path = "modular-cell-419718-da76e8d77c56.json"
-
 # Decode the environment variable to get the JSON credentials
 json_key_base64 = os.getenv('GOOGLE_CLOUD_CREDENTIALS')
 json_key_content = base64.b64decode(json_key_base64).decode('utf-8')
@@ -17,9 +14,6 @@ json_key_content = base64.b64decode(json_key_base64).decode('utf-8')
 # Use the credentials to create a temporary JSON file
 with BytesIO(json_key_content.encode()) as json_key_file:
     client = texttospeech.TextToSpeechClient.from_service_account_info(json.load(json_key_file))
-
-# Initialize the Text-to-Speech client using the local JSON key file
-# client = texttospeech.TextToSpeechClient.from_service_account_file(json_key_path)
 
 # Function to generate and play voice from text using Google TTS
 def text_to_speech(text, speaker):
@@ -87,14 +81,14 @@ scenarios = [
             {"speaker": "Guest", "message": "Hey Bill, Is there a good place to eat around here?"},
             {"speaker": "AI", "message": "There are 26 restaurants within 5 miles of the hotel. Do you have a preferred food type?"},
             {"speaker": "Guest", "message": "How about Italian."},
-            {"speaker": "AI", "message": "Stop me as I list the 5 Italian restaurants. Bona Vita 3 miles from here closes at 9pm..."},
+            {"speaker": "AI", "message": "You can stop me as I list the 5 Italian restaurants. Bona Vita 3 miles from here closes at 9pm..."},
             {"speaker": "AI", "message": "Can I text you the phone number and directions?"}
         ]
     },
     {
         "conversation": [
             {"speaker": "Guest", "message": "Hey Bill, What amenities does the hotel have?"},
-            {"speaker": "AI", "message": "The hotel has an outdoor pool, a 200 sq. ft. exercise gym, a conference center, a restaurant, bar, shuttle service to the airport, and a business lounge."},
+            {"speaker": "AI", "message": "The hotel has an outdoor pool, a 200 square foot exercise gym, a conference center, a restaurant, bar, shuttle service to the airport, and a business lounge."},
             {"speaker": "AI", "message": "Can I text you the details of any of these services?"}
         ]
     },
